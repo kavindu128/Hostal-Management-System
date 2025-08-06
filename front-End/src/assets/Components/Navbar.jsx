@@ -1,11 +1,12 @@
 // 
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-blue-600 text-white shadow">
+    <nav className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow">
       <div className="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
         <div className="text-2xl font-bold">HostelMS</div>
 
@@ -38,30 +39,24 @@ const Navbar = () => {
           }`}
         >
           <li>
-            <a href="#home" className="block hover:text-gray-300">
-              Home
-            </a>
+            <Link to="/" className="block hover:text-gray-300">Home</Link>
           </li>
           <li>
-            <a href="#dashboard" className="block hover:text-gray-300">
-              Dashboard
-            </a>
+            <Link to="/dashboard" className="block hover:text-gray-300">Dashboard</Link>
           </li>
           <li>
-            <a href="#register" className="block hover:text-gray-300">
-              Register
-            </a>
+            <Link to="/register" className="block hover:text-gray-300">Register</Link>
           </li>
           <li>
-            <a href="#about" className="block hover:text-gray-300">
-              About
-            </a>
+            <Link to="/about" className="block hover:text-gray-300">About</Link>
           </li>
           <li className="md:ml-4">
-            <button className="bg-white text-blue-600 px-6 py-2 rounded-full border border-blue-600 
-            hover:bg-blue-600 hover:text-white hover:border-white transition-colors duration-300">
+            <Link to="/login">
+              <button className="bg-white text-blue-500 px-6 py-2 rounded-full border border-blue-100 
+              hover:bg-blue-600 hover:text-white hover:border-white transition-colors duration-300">
                 Sign up
-            </button>
+              </button>
+            </Link>
           </li>
         </ul>
       </div>
