@@ -23,7 +23,7 @@ public class Student {
     @Column(name= "full_name")
     private String fullName;
 
-    @Column(name="date")
+    @Column(name="date_of_birth")
     private Date dateOfBirth;
 
     @Column(name="address_line_1")

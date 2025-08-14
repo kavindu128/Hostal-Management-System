@@ -1,6 +1,6 @@
 import React from 'react';
-import Sidebar from '../Components/slidebar';
 import HostelCard from '../Components/HostalCard';
+
 
 const DashboardPage = () => {
   const hostels = [
@@ -12,18 +12,11 @@ const DashboardPage = () => {
     { name: 'Hostel F', studentCount: 256 },
   ];
 
-  return (
-    <div className="min-h-screen flex">
-      <Sidebar />
-      <div className="w-full p-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-20 bg-white">
-        {hostels.map((hostel, index) => (
-          <HostelCard
-            key={index}
-            name={hostel.name}
-            studentCount={hostel.studentCount}
-          />
-        ))}
-      </div>
+   return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {hostels.map((hostel, index) => (
+        <HostelCard key={index} name={hostel.name} studentCount={hostel.studentCount} />
+      ))}
     </div>
   );
 };
