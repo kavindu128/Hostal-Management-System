@@ -34,7 +34,8 @@ const Navbar = () => {
 
         {/* Navigation Links */}
         <ul
-          className={`md:flex md:items-center space-y-4 md:space-y-0 md:space-x-6 text-lg absolute md:static bg-blue-600 md:bg-transparent w-full md:w-auto left-0 top-16 md:top-auto px-6 md:px-0 transition-all duration-300 ease-in ${
+          className={`md:flex md:items-center space-y-4 md:space-y-0 md:space-x-6 text-lg absolute md:static bg-blue-600 
+            md:bg-transparent w-full md:w-auto left-0 top-16 md:top-auto px-6 md:px-0 transition-all duration-300 ease-in ${
             isOpen ? 'block' : 'hidden'
           }`}
         >
@@ -53,7 +54,7 @@ const Navbar = () => {
           <li className="md:ml-4">
             <Link to="/login">
               <button className="bg-white text-blue-500 px-6 py-2 rounded-full border border-blue-100 
-              hover:bg-blue-600 hover:text-white hover:border-white transition-colors duration-300">
+              hover:bg-blue-400 hover:text-white hover:border-white transition-colors duration-300">
                 Sign up
               </button>
             </Link>
