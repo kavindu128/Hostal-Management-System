@@ -6,7 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Setter
@@ -40,6 +42,22 @@ public class Student {
 
     @Column(name= "emergency_contact_no")
     private String emergencyContactNo;
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Allocation> allocations = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Visitor> visitors = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Complaint> complaints = new ArrayList<>();
+
+    @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
+    private List<Payment> payments = new ArrayList<>();
+
+    @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)
+    private User user;
+
 
 
 }

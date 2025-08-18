@@ -1,53 +1,51 @@
 package com.hostel_ms.backend.controller;
 
-import com.hostel_ms.backend.dto.StudentDto;
+import com.hostel_ms.backend.entity.Student;
 import com.hostel_ms.backend.service.StudentService;
-import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin("*")
-@AllArgsConstructor
 @RestController
-@RequestMapping("/api/student")
+@RequestMapping("/api/students")
+@CrossOrigin(origins = "http://localhost:5173")
 public class StudentController {
-    private StudentService studentService;
 
-    @PostMapping
-    public ResponseEntity<StudentDto> createStudent(@RequestBody StudentDto studentDto){
-        StudentDto savedStudent = studentService.createStudent(studentDto);
-        return new ResponseEntity<>(savedStudent, HttpStatus.CREATED);
+    private final StudentService studentService;
+
+    @Autowired
+    public StudentController(StudentService studentService) {
+        this.studentService = studentService;
     }
-
-    @GetMapping("{regNo}")
-    public ResponseEntity<StudentDto> getStudentByRegNo(@PathVariable("regNo") String regNo){
-        StudentDto studentDto = studentService.getStudentByRegName(regNo);
-        return ResponseEntity.ok(studentDto);
-    }
-
 
     @GetMapping
-    public ResponseEntity<List<StudentDto>> getAllStudents(){
-        List<StudentDto> students = studentService.getAllStudent();
-        return ResponseEntity.ok(students);
+    public ResponseEntity<List<Student>> getAllStudents() {
+        return ResponseEntity.ok(studentService.getAllStudents());
     }
 
-
-    @PutMapping("{id}")
-    public ResponseEntity<StudentDto> updateStudent(@PathVariable("id") String regNo,
-                                                    @RequestBody StudentDto updatedStudent){
-        StudentDto studentDto = studentService.updateStudent(regNo, updatedStudent);
-        return ResponseEntity.ok(studentDto);
+    @GetMapping("/{regNo}")
+    public ResponseEntity<Student> getStudentById(@PathVariable String regNo) {
+        return ResponseEntity.ok(studentService.getStudentById(regNo));
     }
 
+    @PostMapping
+    public ResponseEntity<Student> createStudent(@RequestBody Student student) {
+        return new ResponseEntity<>(studentService.createStudent(student), HttpStatus.CREATED);
+    }
 
-    @DeleteMapping("{id}")
-    public ResponseEntity<String> deleteStudent(@PathVariable("id") String regNo){
+    @PutMapping("/{regNo}")
+    public ResponseEntity<Student> updateStudent(@PathVariable String regNo, @RequestBody Student studentDetails) {
+        return ResponseEntity.ok(studentService.updateStudent(regNo, studentDetails));
+    }
+
+    @DeleteMapping("/{regNo}")
+    public ResponseEntity<Void> deleteStudent(@PathVariable String regNo) {
         studentService.deleteStudent(regNo);
-        return ResponseEntity.ok("Student deleted successfully!.");
+        return ResponseEntity.noContent().build();
+
     }
 
 }
