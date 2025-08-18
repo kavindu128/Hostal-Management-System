@@ -3,6 +3,7 @@ package com.hostel_ms.backend.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -18,8 +19,8 @@ public class Allocation {
     private Long allocId;
 
     private String status;
-    private Date dateFrom;
-    private Date dateTo;
+    private LocalDate dateFrom;
+    private LocalDate dateTo;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

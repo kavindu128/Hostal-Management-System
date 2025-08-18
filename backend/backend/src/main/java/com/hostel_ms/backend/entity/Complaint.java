@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -21,7 +22,7 @@ public class Complaint {
     private Long complaintId;
 
     private String description;
-    private Date date;
+    private LocalDate date;
 
     @ManyToOne
     @JoinColumn(name = "student_id")

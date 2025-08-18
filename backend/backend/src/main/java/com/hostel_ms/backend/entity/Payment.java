@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -21,7 +22,7 @@ public class Payment {
     private Long paymentId;
 
     private BigDecimal amount;
-    private Date date;
+    private LocalDate date;
     private String paymentType;
     private String receiptNo;
 

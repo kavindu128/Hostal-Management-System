@@ -18,18 +18,19 @@ const Sidebar = () => {
         <NavLink
           key={button.path}
           to={button.path}
+          end={button.path === '/dashboard'} // Only exact match for Dashboard
           className={({ isActive }) => 
             `block w-full text-center font-bold py-2 rounded-md transition ${
-              isActive 
-                ? 'bg-blue-700 text-white' 
-                : 'bg-white text-blue-700 hover:bg-blue-600 hover:text-white'
-            }`
-          }
-        >
-          {button.label}
-        </NavLink>
+        isActive 
+          ? 'bg-blue-700 text-white' 
+          : 'bg-white text-blue-700 hover:bg-blue-600 hover:text-white'
+         }`
+      }
+    >
+      {button.label}
+      </NavLink>
       ))}
-    </div>
+      </div>
   );
 };
 
