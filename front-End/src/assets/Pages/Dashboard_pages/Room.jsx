@@ -32,10 +32,10 @@ const RoomPage = () => {
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-4 gap-4">
           <input
             type="text"
-            name="student"
-            placeholder="Student Name"
+            name="regNo"
+            placeholder="Registration Number"
             className="p-2 border rounded"
-            value={newAllocation.student}
+            value={newAllocation.regNo}
             onChange={handleChange}
             required
           />
@@ -50,6 +50,9 @@ const RoomPage = () => {
             <option value="Hostel A">Hostel A</option>
             <option value="Hostel B">Hostel B</option>
             <option value="Hostel C">Hostel C</option>
+            <option value="Hostel D">Hostel D</option>
+            <option value="Hostel E">Hostel E</option>
+
           </select>
           <input
             type="text"

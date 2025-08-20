@@ -37,3 +37,20 @@ export const deleteStudent = async (id) => {
   return res;
 };
 
+
+export const updateStudent = async (regNo, data) => {
+  const response = await fetch(`${API_BASE_URL}/students/${regNo}`, {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Update failed with status ${response.status}`);
+  }
+
+  // if backend returns empty body (204 No Content), avoid JSON.parse error
+  const text = await response.text();
+  return text ? JSON.parse(text) : null;
+};
+

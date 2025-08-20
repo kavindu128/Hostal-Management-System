@@ -38,7 +38,8 @@ public class StudentController {
 
     @PutMapping("/{regNo}")
     public ResponseEntity<Student> updateStudent(@PathVariable String regNo, @RequestBody Student studentDetails) {
-        return ResponseEntity.ok(studentService.updateStudent(regNo, studentDetails));
+        Student updated = studentService.updateStudent(regNo, studentDetails);
+        return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{regNo}")
