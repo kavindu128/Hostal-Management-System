@@ -69,11 +69,14 @@ const StudentsPage = () => {
   };
 
   // Filter search
-  const filteredStudents = students.filter(
-    (student) =>
-      student.regNo.toLowerCase().includes(search.toLowerCase()) ||
-      student.fullName.toLowerCase().includes(search.toLowerCase())
-  );
+ const filteredStudents = Array.isArray(students)
+  ? students.filter(
+      (student) =>
+        student.regNo.toLowerCase().includes(search.toLowerCase()) ||
+        student.fullName.toLowerCase().includes(search.toLowerCase())
+    )
+  : [];
+
 
   return (
     <div className="p-6">
