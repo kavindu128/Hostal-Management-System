@@ -40,6 +40,7 @@ public class StudentImpl implements StudentService {
     public Student updateStudent(String regNo, Student studentDetails) {
         Student student = getStudentById(regNo);
         student.setFullName(studentDetails.getFullName());
+        student.setDateOfBirth(studentDetails.getDateOfBirth());
         student.setAddressLine1(studentDetails.getAddressLine1());
         student.setAddressLine2(studentDetails.getAddressLine2());
         student.setCity(studentDetails.getCity());

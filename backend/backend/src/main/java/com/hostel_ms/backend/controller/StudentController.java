@@ -3,6 +3,7 @@ package com.hostel_ms.backend.controller;
 import com.hostel_ms.backend.entity.Student;
 import com.hostel_ms.backend.service.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -43,10 +44,17 @@ public class StudentController {
     }
 
     @DeleteMapping("/{regNo}")
-    public ResponseEntity<Void> deleteStudent(@PathVariable String regNo) {
-        studentService.deleteStudent(regNo);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<?> deleteStudent(@PathVariable String regNo) {
+        try {
+            studentService.deleteStudent(regNo);
+            return ResponseEntity.noContent().build();
+        } catch (DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT)
+                    .body("Cannot delete student due to related records");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error deleting student: " + e.getMessage());
+        }
 
     }
-
 }
