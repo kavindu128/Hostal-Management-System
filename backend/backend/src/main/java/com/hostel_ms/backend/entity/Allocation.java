@@ -1,6 +1,8 @@
 package com.hostel_ms.backend.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -32,5 +34,6 @@ public class Allocation {
 
     @ManyToOne
     @JoinColumn(name = "room_no")
+//    @JsonIgnore
     private Room room;
 }

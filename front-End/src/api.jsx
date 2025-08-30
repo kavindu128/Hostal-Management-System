@@ -81,10 +81,18 @@ export const getAllAllocations = async () => {
 };
 
 export const createAllocation = async (allocationData) => {
+  // Transform the data to match backend expectations
+  const backendData = {
+    regNo: allocationData.studentRegNo,
+    roomNo: allocationData.roomNo,
+    dateFrom: allocationData.dateFrom,
+    dateTo: allocationData.dateTo
+  };
+
   const response = await fetch(`${API_BASE_URL}/allocations`, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(allocationData),
+    body: JSON.stringify(backendData),
   });
   
   if (!response.ok) {

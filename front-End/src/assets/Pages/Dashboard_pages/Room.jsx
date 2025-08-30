@@ -165,55 +165,48 @@ const RoomPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    try {
-      setLoading(true);
-      // Find the selected student and room objects
-      const student = students.find(s => s.regNo === formData.regNo);
-      const room = availableRooms.find(r => r.roomNo === formData.roomNo);
-      
-      if (!student || !room) {
-        alert('Please select a valid student and room');
-        return;
-      }
-      
-      // Prepare allocation data for API
-      const allocationData = {
-        student: { regNo: formData.regNo },
-        room: { roomNo: formData.roomNo },
-        dateFrom: formData.dateFrom,
-        dateTo: formData.dateTo,
-        status: formData.status
-      };
-      
-      // Send request to backend
-      const newAllocation = await createAllocation(allocationData);
-      
-      // Update local state
-      setAllocations([...allocations, newAllocation]);
-      
-      // Reset form
-      setFormData({
-        regNo: '',
-        hostelName: '',
-        roomNo: '',
-        dateFrom: '',
-        dateTo: '',
-        status: 'ACTIVE'
-      });
-      
-      setFilteredRooms([]);
-      
-      alert('Room allocated successfully!');
-    } catch (error) {
-      console.error('Error creating allocation:', error);
-      alert('Failed to allocate room. Please check the console for details.');
-    } finally {
-      setLoading(false);
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccess('');
+
+  // Transform the data to match what the backend expects
+  const backendData = {
+    regNo: newAllocation.studentRegNo,
+    roomNo: newAllocation.roomNo,
+    dateFrom: newAllocation.dateFrom,
+    dateTo: newAllocation.dateTo
+    // Note: If your backend doesn't expect a status field, don't include it
   };
+
+  try {
+    const response = await fetch('http://localhost:8080/api/allocations', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(backendData),
+    });
+
+    if (response.ok) {
+      setSuccess('Room allocated successfully!');
+      setNewAllocation({
+        studentRegNo: '',
+        roomNo: '',
+        dateFrom: new Date().toISOString().split('T')[0],
+        dateTo: '',
+        status: 'Active'
+      });
+      onClose();
+      fetchAllocations(); // Refresh the allocations list
+    } else {
+      const errorData = await response.json();
+      setError(errorData.message || 'Failed to allocate room');
+    }
+  } catch (error) {
+    setError('Error allocating room: ' + error.message);
+  }
+};
 
   const handleDeallocate = async (allocId) => {
     if (!window.confirm('Are you sure you want to deallocate this room?')) {
