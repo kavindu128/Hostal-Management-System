@@ -4,13 +4,22 @@ import com.hostel_ms.backend.entity.Allocation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface AllocationRepository extends JpaRepository<Allocation,Long > {
-    @Query("SELECT a FROM Allocation a JOIN FETCH a.student JOIN FETCH a.room WHERE a.room.roomNo = :roomNo")
-    List<Allocation> findByRoomRoomNo(@Param("roomNo") String roomNo);
+    List<Allocation> findByStudentRegNo(String regNo);
 
-    @Query("SELECT a FROM Allocation a JOIN FETCH a.room WHERE a.student.regNo = :regNo")
-    List<Allocation> findByStudentRegNo(@Param("regNo") String regNo);
+    List<Allocation> findByRoomRoomNo(String roomNo);
+
+    @Query("SELECT a FROM Allocation a WHERE a.status = 'ACTIVE'")
+    List<Allocation> findActiveAllocations();
+
+    @Query("SELECT a FROM Allocation a WHERE a.room.roomNo = :roomNo AND a.status = 'ACTIVE'")
+    List<Allocation> findActiveAllocationsByRoom(@Param("roomNo") String roomNo);
+
+    @Query("SELECT a FROM Allocation a WHERE a.student.regNo = :regNo AND a.status = 'ACTIVE'")
+    Allocation findActiveAllocationByStudent(@Param("regNo") String regNo);
 }
