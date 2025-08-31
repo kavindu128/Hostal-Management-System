@@ -134,15 +134,42 @@ export const createStaff = async (staffData) => {
 // Visitor API functions
 export const getAllVisitors = async () => {
   const response = await fetch(`${API_BASE_URL}/visitors`);
+  if (!response.ok) {
+    throw new Error('Failed to fetch visitors');
+  }
   return response.json();
 };
 
 export const createVisitor = async (visitorData) => {
   const response = await fetch(`${API_BASE_URL}/visitors`, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify(visitorData),
   });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(error);
+  }
+  
+  return response.json();
+};
+
+export const recordExitTime = async (visitorId) => {
+  const response = await fetch(`${API_BASE_URL}/visitors/${visitorId}/exit`, {
+    method: 'PUT',
+    headers: { 
+      'Content-Type': 'application/json',
+    },
+  });
+  
+  if (!response.ok) {
+    const error = await response.text();
+    throw new Error(error);
+  }
+  
   return response.json();
 };
 
