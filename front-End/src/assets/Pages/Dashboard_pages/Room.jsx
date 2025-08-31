@@ -16,117 +16,27 @@ const RoomPage = () => {
     status: 'ACTIVE'
   });
 
-  // API Base URL
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // API Functions
-  const getAllAllocations = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/allocations`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching allocations:', error);
-      throw error;
-    }
-  };
-
-  const createAllocation = async (allocationData) => {
-    try {
-      console.log('Sending allocation data:', allocationData);
-      
-      const response = await fetch(`${API_BASE_URL}/allocations`, {
-        method: 'POST',
-        headers: { 
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(allocationData),
-      });
-      
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Server error response:', errorText);
-        throw new Error(`HTTP error! status: ${response.status}, message: ${errorText}`);
-      }
-      
-      return await response.json();
-    } catch (error) {
-      console.error('Error creating allocation:', error);
-      throw error;
-    }
-  };
-
-  const deleteAllocation = async (allocId) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/allocations/${allocId}`, {
-        method: 'DELETE',
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      
-      return response;
-    } catch (error) {
-      console.error('Error deleting allocation:', error);
-      throw error;
-    }
-  };
-
-  const listStudents = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/students`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching students:', error);
-      throw error;
-    }
-  };
-
-  const getAvailableRooms = async () => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/rooms/available`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching available rooms:', error);
-      throw error;
-    }
-  };
-
-  const getRoomsByHostel = async (hostelName) => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/rooms/hostel/${hostelName}`);
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-      return await response.json();
-    } catch (error) {
-      console.error('Error fetching rooms by hostel:', error);
-      throw error;
-    }
-  };
-
-  // Fetch data on component mount
-  useEffect(() => {
-    fetchData();
-  }, []);
-
+  // Fetch data function
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [allocationsData, studentsData, roomsData] = await Promise.all([
-        getAllAllocations(),
-        listStudents(),
-        getAvailableRooms()
-      ]);
+      
+      // Fetch allocations
+      const allocationsResponse = await fetch(`${API_BASE_URL}/allocations`);
+      if (!allocationsResponse.ok) throw new Error('Failed to fetch allocations');
+      const allocationsData = await allocationsResponse.json();
+      
+      // Fetch students
+      const studentsResponse = await fetch(`${API_BASE_URL}/students`);
+      if (!studentsResponse.ok) throw new Error('Failed to fetch students');
+      const studentsData = await studentsResponse.json();
+      
+      // Fetch available rooms
+      const roomsResponse = await fetch(`${API_BASE_URL}/rooms`);
+      if (!roomsResponse.ok) throw new Error('Failed to fetch rooms');
+      const roomsData = await roomsResponse.json();
       
       setAllocations(allocationsData);
       setStudents(studentsData);
@@ -135,26 +45,28 @@ const RoomPage = () => {
       // Extract unique hostel names
       const uniqueHostels = [...new Set(roomsData.map(room => room.hostelName))];
       setHostels(uniqueHostels);
+      
     } catch (error) {
       console.error('Error fetching data:', error);
-      alert('Failed to fetch data. Please check your backend server.');
+      alert('Error loading data: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleHostelChange = async (e) => {
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const handleHostelChange = (e) => {
     const hostelName = e.target.value;
     setFormData(prev => ({ ...prev, hostelName, roomNo: '' }));
     
     if (hostelName) {
-      try {
-        // Fetch rooms for the selected hostel
-        const rooms = await getRoomsByHostel(hostelName);
-        setFilteredRooms(rooms.filter(room => room.status === 'AVAILABLE'));
-      } catch (error) {
-        console.error('Error fetching rooms by hostel:', error);
-      }
+      const roomsForHostel = availableRooms.filter(room => 
+        room.hostelName === hostelName && room.status === 'AVAILABLE'
+      );
+      setFilteredRooms(roomsForHostel);
     } else {
       setFilteredRooms([]);
     }
@@ -165,87 +77,90 @@ const RoomPage = () => {
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  setError('');
-  setSuccess('');
-
-  // Transform the data to match what the backend expects
-  const backendData = {
-    regNo: newAllocation.studentRegNo,
-    roomNo: newAllocation.roomNo,
-    dateFrom: newAllocation.dateFrom,
-    dateTo: newAllocation.dateTo
-    // Note: If your backend doesn't expect a status field, don't include it
-  };
-
-  try {
-    const response = await fetch('http://localhost:8080/api/allocations', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(backendData),
-    });
-
-    if (response.ok) {
-      setSuccess('Room allocated successfully!');
-      setNewAllocation({
-        studentRegNo: '',
-        roomNo: '',
-        dateFrom: new Date().toISOString().split('T')[0],
-        dateTo: '',
-        status: 'Active'
-      });
-      onClose();
-      fetchAllocations(); // Refresh the allocations list
-    } else {
-      const errorData = await response.json();
-      setError(errorData.message || 'Failed to allocate room');
-    }
-  } catch (error) {
-    setError('Error allocating room: ' + error.message);
-  }
-};
-
-  const handleDeallocate = async (allocId) => {
-    if (!window.confirm('Are you sure you want to deallocate this room?')) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!formData.regNo || !formData.roomNo || !formData.dateFrom) {
+      alert('Please fill all required fields');
       return;
     }
-    
+
     try {
       setLoading(true);
-      await deleteAllocation(allocId);
       
-      // Update local state
-      setAllocations(allocations.filter(allocation => allocation.allocId !== allocId));
-      
-      alert('Room deallocated successfully!');
+      const allocationData = {
+        regNo: formData.regNo,
+        roomNo: formData.roomNo,
+        dateFrom: formData.dateFrom,
+        dateTo: formData.dateTo || null
+      };
+
+      const response = await fetch(`${API_BASE_URL}/allocations`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(allocationData),
+      });
+
+      if (response.ok) {
+        // Reset form
+        setFormData({
+          regNo: '',
+          hostelName: '',
+          roomNo: '',
+          dateFrom: '',
+          dateTo: '',
+          status: 'ACTIVE'
+        });
+        
+        // Refresh data
+        await fetchData();
+        alert('Room allocated successfully!');
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText);
+      }
     } catch (error) {
-      console.error('Error deleting allocation:', error);
-      alert('Failed to deallocate room');
+      console.error('Error allocating room:', error);
+      alert('Failed to allocate room: ' + error.message);
     } finally {
       setLoading(false);
     }
   };
 
-  if (loading) {
-    return (
-      <div className="p-6">
-        <div className="flex justify-center items-center h-64">
-          <div className="text-xl">Loading...</div>
-        </div>
-      </div>
-    );
+  const handleDeallocate = async (allocId) => {
+  if (!window.confirm('Are you sure you want to deallocate this room?')) {
+    return;
   }
+  
+  try {
+    // Simple fetch with error handling
+    const response = await fetch(`http://localhost:8080/api/allocations/${allocId}`, {
+      method: 'DELETE'
+    });
+
+    if (response.ok) {
+      // Remove from UI immediately
+      setAllocations(allocations.filter(allocation => allocation.allocId !== allocId));
+      alert('Room deallocated successfully!');
+    } else {
+      alert('Failed to deallocate. Please try again.');
+    }
+  } catch (error) {
+    alert('Network error. Check if server is running.');
+  }
+  };
 
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Room Allocation</h1>
       
+      {/* Allocation Form */}
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Allocate Room</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+          {/* Form fields */}
           <div>
             <label className="block text-sm font-medium mb-1">Student</label>
             <select
@@ -321,7 +236,6 @@ const handleSubmit = async (e) => {
               className="w-full p-2 border rounded"
               value={formData.dateTo}
               onChange={handleChange}
-              required
             />
           </div>
           
@@ -337,6 +251,7 @@ const handleSubmit = async (e) => {
         </form>
       </div>
 
+      {/* Allocations Table */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Current Allocations</h2>
         {allocations.length === 0 ? (
@@ -346,6 +261,7 @@ const handleSubmit = async (e) => {
             <table className="min-w-full bg-white">
               <thead>
                 <tr>
+                  <th className="py-2 px-4 border-b">ID</th>
                   <th className="py-2 px-4 border-b">Student</th>
                   <th className="py-2 px-4 border-b">Registration No</th>
                   <th className="py-2 px-4 border-b">Hostel</th>
@@ -359,6 +275,7 @@ const handleSubmit = async (e) => {
               <tbody>
                 {allocations.map((allocation) => (
                   <tr key={allocation.allocId}>
+                    <td className="py-2 px-4 border-b">{allocation.allocId}</td>
                     <td className="py-2 px-4 border-b">
                       {allocation.student?.fullName || 'N/A'}
                     </td>
@@ -375,7 +292,7 @@ const handleSubmit = async (e) => {
                       {allocation.dateFrom}
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {allocation.dateTo}
+                      {allocation.dateTo || 'N/A'}
                     </td>
                     <td className="py-2 px-4 border-b">
                       <span className={`px-2 py-1 rounded text-xs ${
@@ -387,12 +304,16 @@ const handleSubmit = async (e) => {
                       </span>
                     </td>
                     <td className="py-2 px-4 border-b">
+                      {/* FIXED BUTTON */}
                       <button 
-                        onClick={() => handleDeallocate(allocation.allocId)}
-                        className="text-red-600 hover:text-red-900 px-2 py-1 border border-red-300 rounded hover:bg-red-50"
+                        onClick={() => {
+                          console.log('Button clicked for ID:', allocation.allocId);
+                          handleDeallocate(allocation.allocId);
+                        }}
+                        className="text-red-600 hover:text-red-900 px-2 py-1 border border-red-300 rounded hover:bg-red-50 transition-colors"
                         disabled={loading}
                       >
-                        Deallocate
+                        {loading ? 'Deallocating...' : 'Deallocate'}
                       </button>
                     </td>
                   </tr>

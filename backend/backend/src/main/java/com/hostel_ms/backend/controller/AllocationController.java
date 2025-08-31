@@ -5,6 +5,7 @@ import com.hostel_ms.backend.service.AllocationService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,11 +55,16 @@ public class AllocationController {
 
         return ResponseEntity.ok(allocationService.allocateRoom(regNo, roomNo, dateFrom, dateTo));
     }
-
     @DeleteMapping("/{allocId}")
+    @CrossOrigin(origins = "http://localhost:5173") // Add this line
     public ResponseEntity<?> deallocateRoom(@PathVariable Long allocId) {
-        allocationService.deallocateRoom(allocId);
-        return ResponseEntity.ok().build();
+        try {
+            allocationService.deallocateRoom(allocId);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("Allocation not found with ID: " + allocId);
+        }
     }
 
     @PatchMapping("/{allocId}/dates")
