@@ -62,7 +62,7 @@ const RegistrationPage = () => {
             </label>
             <input
               type="text"
-              placeholder="EG/2022/5016"
+              placeholder="EG5016"
               className="flex-grow bg-transparent rounded-lg px-4 py-2 text-lg text-black placeholder-gray-700 border border-gray-400"
               value={formData.regNo}
               onChange={(e) => setFormData({ ...formData, regNo: e.target.value })} 

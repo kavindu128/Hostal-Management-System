@@ -129,30 +129,37 @@ const RoomPage = () => {
     }
   };
 
-  const handleDeallocate = async (allocId) => {
-    if (!window.confirm('Are you sure you want to deallocate this room?')) {
-      return;
-    }
-    
-    try {
-      // Fixed the API endpoint URL
-      const response = await fetch(`${API_BASE_URL}/allocations/${allocId}`, {
-        method: 'DELETE'
-      });
+// ... (previous code remains the same)
 
-      if (response.ok) {
-        // Refresh the data to get updated allocations
-        await fetchData();
-        alert('Room deallocated successfully!');
-      } else {
-        const errorText = await response.text();
-        throw new Error(errorText || 'Failed to deallocate');
-      }
-    } catch (error) {
-      console.error('Error deallocating room:', error);
-      alert('Failed to deallocate: ' + error.message);
+const handleDeallocate = async (allocId) => {
+  if (!window.confirm('Are you sure you want to deallocate this room?')) {
+    return;
+  }
+  
+  try {
+    // Fixed API endpoint and method
+    const response = await fetch(`${API_BASE_URL}/allocations/${allocId}`, {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    if (response.ok) {
+      // Refresh the data
+      await fetchData();
+      alert('Room deallocated successfully!');
+    } else {
+      const errorText = await response.text();
+      throw new Error(errorText || 'Failed to deallocate room');
     }
-  };
+  } catch (error) {
+    console.error('Error deallocating room:', error);
+    alert('Failed to deallocate room: ' + error.message);
+  }
+};
+
+
 
   return (
     <div className="p-6">
