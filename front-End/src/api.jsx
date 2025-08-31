@@ -118,17 +118,56 @@ export const deleteAllocation = async (allocId) => {
 
 // Staff API functions
 export const getAllStaff = async () => {
-  const response = await fetch(`${API_BASE_URL}/staff`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/staff`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching staff list:", error);
+    throw error;
+  }
 };
 
 export const createStaff = async (staffData) => {
-  const response = await fetch(`${API_BASE_URL}/staff`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(staffData),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/staff`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(staffData),
+    });
+    
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error("Error creating staff:", error);
+    throw error;
+  }
+};
+
+export const deleteStaff = async (regNo) => {
+  try {
+    const response = await fetch(`${API_BASE_URL}/staff/${regNo}`, {
+      method: 'DELETE',
+    });
+    
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
+    
+    return response;
+  } catch (error) {
+    console.error("Error deleting staff:", error);
+    throw error;
+  }
 };
 
 // Visitor API functions
@@ -175,17 +214,38 @@ export const recordExitTime = async (visitorId) => {
 
 // Complaint API functions
 export const getAllComplaints = async () => {
-  const response = await fetch(`${API_BASE_URL}/complaints`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/complaints`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching complaints:", error);
+    throw error;
+  }
 };
 
 export const createComplaint = async (complaintData) => {
-  const response = await fetch(`${API_BASE_URL}/complaints`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(complaintData),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/complaints`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(complaintData),
+    });
+    
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error("Error creating complaint:", error);
+    throw error;
+  }
 };
 
 // Payment API functions
