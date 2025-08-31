@@ -12,7 +12,7 @@ import StaffPage from './assets/Pages/Dashboard_pages/Staff.jsx';
 import RoomPage from './assets/Pages/Dashboard_pages/Room.jsx';
 import VisitorPage from './assets/Pages/Dashboard_pages/Visitor.jsx';
 import ComplaintPage from './assets/Pages/Dashboard_pages/Complaint.jsx';
-// import PaymentPage from './assets/Pages/Dashboard_pages/Payment.jsx';
+import PaymentPage from './assets/Pages/Dashboard_pages/Payment.jsx';
 
 const App = () => {
   return (
@@ -35,7 +35,7 @@ const App = () => {
           <Route path="room" element={<RoomPage />} />
           <Route path="visitor" element={<VisitorPage />} />
           <Route path="complaint" element={<ComplaintPage />} />
-          {/* <Route path="payment" element={<PaymentPage />} /> */}
+          <Route path="payment" element={<PaymentPage />} />
         </Route>
       </Routes>
     </Router>

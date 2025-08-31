@@ -250,17 +250,38 @@ export const createComplaint = async (complaintData) => {
 
 // Payment API functions
 export const getAllPayments = async () => {
-  const response = await fetch(`${API_BASE_URL}/payments`);
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/payments`);
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+    return response.json();
+  } catch (error) {
+    console.error("Error fetching payments:", error);
+    throw error;
+  }
 };
 
 export const createPayment = async (paymentData) => {
-  const response = await fetch(`${API_BASE_URL}/payments`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(paymentData),
-  });
-  return response.json();
+  try {
+    const response = await fetch(`${API_BASE_URL}/payments`, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(paymentData),
+    });
+    
+    if (!response.ok) {
+      const error = await response.text();
+      throw new Error(error);
+    }
+    
+    return response.json();
+  } catch (error) {
+    console.error("Error creating payment:", error);
+    throw error;
+  }
 };
 
 export default {
