@@ -17,7 +17,10 @@ public class User {
     @Id
     private String username;
 
+    @Column(nullable = false)
     private String password;
+
+    @Column(nullable = false)
     private String role;
 
     @OneToOne

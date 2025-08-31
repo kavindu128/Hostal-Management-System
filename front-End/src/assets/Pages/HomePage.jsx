@@ -1,5 +1,5 @@
 import React from 'react';
-import HomeHostelCard from '../Components/HomeHostalCard';
+import HomeHostelCard from '../Components/HomeHostalCard.jsx';
 import hostel_a from '../../images/hostel_a.jpg';
 import hostel_b from '../../images/hostel_b.jpg';
 import hostel_c from '../../images/hostel_c.jpg';

@@ -1,8 +1,7 @@
-// 
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({ currentUser, onLogout }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -43,22 +42,34 @@ const Navbar = () => {
             <Link to="/" className="block hover:text-gray-300">Home</Link>
           </li>
           <li>
-            <Link to="/dashboard" className="block hover:text-gray-300">Dashboard</Link>
-          </li>
-          <li>
-            <Link to="/register" className="block hover:text-gray-300">Register</Link>
-          </li>
-          <li>
             <Link to="/about" className="block hover:text-gray-300">About</Link>
           </li>
-          <li className="md:ml-4">
-            <Link to="/login">
-              <button className="bg-white text-blue-500 px-6 py-2 rounded-full border border-blue-100 
-              hover:bg-blue-400 hover:text-white hover:border-white transition-colors duration-300">
-                Sign up
-              </button>
-            </Link>
-          </li>
+          
+          {currentUser ? (
+            <>
+              <li>
+                <Link to="/dashboard" className="block hover:text-gray-300">Dashboard</Link>
+              </li>
+              <li className="md:ml-4">
+                <button 
+                  onClick={onLogout}
+                  className="bg-white text-blue-500 px-6 py-2 rounded-full border border-blue-100 
+                  hover:bg-blue-400 hover:text-white hover:border-white transition-colors duration-300"
+                >
+                  Logout ({currentUser.username})
+                </button>
+              </li>
+            </>
+          ) : (
+            <li className="md:ml-4">
+              <Link to="/login">
+                <button className="bg-white text-blue-500 px-6 py-2 rounded-full border border-blue-100 
+                hover:bg-blue-400 hover:text-white hover:border-white transition-colors duration-300">
+                  Login
+                </button>
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>

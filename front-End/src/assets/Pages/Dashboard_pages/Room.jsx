@@ -130,26 +130,28 @@ const RoomPage = () => {
   };
 
   const handleDeallocate = async (allocId) => {
-  if (!window.confirm('Are you sure you want to deallocate this room?')) {
-    return;
-  }
-  
-  try {
-    // Simple fetch with error handling
-    const response = await fetch(`http://localhost:8080/api/allocations/${allocId}`, {
-      method: 'DELETE'
-    });
-
-    if (response.ok) {
-      // Remove from UI immediately
-      setAllocations(allocations.filter(allocation => allocation.allocId !== allocId));
-      alert('Room deallocated successfully!');
-    } else {
-      alert('Failed to deallocate. Please try again.');
+    if (!window.confirm('Are you sure you want to deallocate this room?')) {
+      return;
     }
-  } catch (error) {
-    alert('Network error. Check if server is running.');
-  }
+    
+    try {
+      // Fixed the API endpoint URL
+      const response = await fetch(`${API_BASE_URL}/allocations/${allocId}`, {
+        method: 'DELETE'
+      });
+
+      if (response.ok) {
+        // Refresh the data to get updated allocations
+        await fetchData();
+        alert('Room deallocated successfully!');
+      } else {
+        const errorText = await response.text();
+        throw new Error(errorText || 'Failed to deallocate');
+      }
+    } catch (error) {
+      console.error('Error deallocating room:', error);
+      alert('Failed to deallocate: ' + error.message);
+    }
   };
 
   return (
@@ -304,12 +306,8 @@ const RoomPage = () => {
                       </span>
                     </td>
                     <td className="py-2 px-4 border-b">
-                      {/* FIXED BUTTON */}
                       <button 
-                        onClick={() => {
-                          console.log('Button clicked for ID:', allocation.allocId);
-                          handleDeallocate(allocation.allocId);
-                        }}
+                        onClick={() => handleDeallocate(allocation.allocId)}
                         className="text-red-600 hover:text-red-900 px-2 py-1 border border-red-300 rounded hover:bg-red-50 transition-colors"
                         disabled={loading}
                       >

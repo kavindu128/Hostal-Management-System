@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider, useAuth } from './assets/AuthContext.jsx';
 import Home from './assets/Pages/HomePage.jsx';
 import About from './assets/Pages/AboutusPage.jsx';
 import DashboardPage from './assets/Pages/DashboardPage.jsx';
@@ -13,12 +14,21 @@ import RoomPage from './assets/Pages/Dashboard_pages/Room.jsx';
 import VisitorPage from './assets/Pages/Dashboard_pages/Visitor.jsx';
 import ComplaintPage from './assets/Pages/Dashboard_pages/Complaint.jsx';
 import PaymentPage from './assets/Pages/Dashboard_pages/Payment.jsx';
+import ProtectedRoute from './assets/ProtectRoute.jsx';
 
-const App = () => {
+
+const NavbarWithAuth = () => {
+  const { currentUser, logout } = useAuth();
+  
+  return (
+    <Navbar currentUser={currentUser} onLogout={logout} />
+  );
+};
+
+const AppContent = () => {
   return (
     <Router>
-      <Navbar />
-
+      <NavbarWithAuth />
       <Routes>
         {/* Public routes */}
         <Route path="/" element={<Home />} />
@@ -26,10 +36,13 @@ const App = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Dashboard routes (with sidebar layout) */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
+        {/* Protected dashboard routes */}
+        <Route path="/dashboard" element={
+          <ProtectedRoute adminOnly={true}>
+            <DashboardLayout />
+          </ProtectedRoute>
+        }>
           <Route index element={<DashboardPage />} />
-          <Route path="dashboard" element={<DashboardPage />} /> 
           <Route path="students" element={<StudentsPage />} />
           <Route path="staff" element={<StaffPage />} />
           <Route path="room" element={<RoomPage />} />
@@ -39,6 +52,14 @@ const App = () => {
         </Route>
       </Routes>
     </Router>
+  );
+};
+
+const App = () => {
+  return (
+    <AuthProvider>
+      <AppContent />
+    </AuthProvider>
   );
 };
 
