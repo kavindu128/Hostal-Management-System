@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 
 const RegistrationPage = () => {
 
-    // add/register
+
     const [formData, setFormData] = React.useState({
         fullName: '',
         regNo: '',
@@ -25,8 +25,8 @@ const RegistrationPage = () => {
         createStudent(formData)
             .then((response) => {
                 console.log('Student created successfully:', response)
-                navigate('/dashboard/students'); // Redirect to students page
-                // Reset form or show success message
+                navigate('/dashboard/students');
+                
             })
             .catch((error) => {
                 console.error('Error creating student:', error);
@@ -36,12 +36,12 @@ const RegistrationPage = () => {
   return (
     <div className="max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-md">
         <form className="space-y-6" onSubmit={saveFormData}>
-          {/* Registration Title */}
+        
           <div className="flex items-center">
             <h2 className="text-2xl font-bold text-blue-900 mb-4">Registration</h2>
           </div>
 
-          {/* Full Name */}
+        
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Full Name
@@ -55,7 +55,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Reg No */}
+         
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Reg No
@@ -69,7 +69,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Contact Number */}
+          
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Contact Number
@@ -83,7 +83,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Date of Birth */}
+          
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Date of Birth
@@ -96,7 +96,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Address - 3 Inputs */}
+          
           <div className="flex items-start">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Address
@@ -126,7 +126,7 @@ const RegistrationPage = () => {
             </div>
           </div>
 
-          {/* Emergency Contact Name */}
+         
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Emergency Contact Name
@@ -140,7 +140,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Emergency Contact Number */}
+          
           <div className="flex items-center">
             <label className="w-1/3 font-semibold text-blue-900 text-lg">
               Emergency Contact Number
@@ -154,7 +154,7 @@ const RegistrationPage = () => {
             />
           </div>
 
-          {/* Submit Button */}
+          
           <div className="flex justify-center">
             <button
               type="submit"

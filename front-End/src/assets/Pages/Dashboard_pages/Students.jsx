@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { listStudents, deleteStudent, updateStudent } from "../../../api";
 import { Link } from "react-router-dom";
 
@@ -20,6 +20,7 @@ const StudentsPage = () => {
     try {
       const data = await listStudents();
       setStudents(data);
+      console.log(data);
     } catch (error) {
       console.error("Error fetching students:", error);
     }
@@ -46,10 +47,10 @@ const StudentsPage = () => {
     try {
       await updateStudent(regNo, editData);
       setEditingRegNo(null);
-      fetchStudents(); // Refresh the list
+      fetchStudents(); 
     } catch (error) {
       console.error("Error updating student:", error);
-      // Simple alert for error
+      
       alert("Failed to update student. Check console for details.");
     }
   };
@@ -98,7 +99,7 @@ const StudentsPage = () => {
         />
       </div>
 
-      {/* Table */}
+
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white">
           <thead>
@@ -118,7 +119,7 @@ const StudentsPage = () => {
                 <tr key={student.regNo}>
                   <td className="py-2 px-4 border-b">{student.regNo}</td>
 
-                  {/* Full Name */}
+                  
                   <td className="py-2 px-4 border-b">
                     {editingRegNo === student.regNo ? (
                       <input
@@ -134,7 +135,7 @@ const StudentsPage = () => {
                     )}
                   </td>
 
-                  {/* DOB */}
+                 
                   <td className="py-2 px-4 border-b">
                     {editingRegNo === student.regNo ? (
                       <input
@@ -153,7 +154,7 @@ const StudentsPage = () => {
                     )}
                   </td>
 
-                  {/* Address */}
+              
                   <td className="py-2 px-4 border-b w-64">
                     {editingRegNo === student.regNo ? (
                       <div className="space-y-2">
@@ -190,7 +191,7 @@ const StudentsPage = () => {
                     )}
                   </td>
 
-                  {/* Emergency Contact Name */}
+                
                   <td className="py-2 px-4 border-b">
                     {editingRegNo === student.regNo ? (
                       <input
@@ -209,7 +210,7 @@ const StudentsPage = () => {
                     )}
                   </td>
 
-                  {/* Emergency Contact No */}
+                
                   <td className="py-2 px-4 border-b">
                     {editingRegNo === student.regNo ? (
                       <input
@@ -228,7 +229,7 @@ const StudentsPage = () => {
                     )}
                   </td>
 
-                  {/* Actions */}
+             
                   <td className="py-2 px-4 border-b">
                     {editingRegNo === student.regNo ? (
                       <>

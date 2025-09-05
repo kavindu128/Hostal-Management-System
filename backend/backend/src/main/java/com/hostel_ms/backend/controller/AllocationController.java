@@ -56,7 +56,6 @@ public class AllocationController {
         return ResponseEntity.ok(allocationService.allocateRoom(regNo, roomNo, dateFrom, dateTo));
     }
     @DeleteMapping("/{allocId}")
-    @CrossOrigin(origins = "http://localhost:5173") // Add this line
     public ResponseEntity<?> deallocateRoom(@PathVariable Long allocId) {
         try {
             allocationService.deallocateRoom(allocId);

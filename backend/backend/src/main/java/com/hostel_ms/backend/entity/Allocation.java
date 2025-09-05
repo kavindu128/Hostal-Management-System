@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table
+@Table()
 @Entity
 public class Allocation {
 
@@ -37,3 +37,5 @@ public class Allocation {
 //    @JsonIgnore
     private Room room;
 }
+
+

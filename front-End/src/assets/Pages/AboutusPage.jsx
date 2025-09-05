@@ -53,7 +53,7 @@ const AboutUsPage = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section */}
+      
       <section className="relative py-20 bg-gradient-to-br from-blue-600 to-cyan-500 text-white text-center">
         <div className="absolute inset-0 bg-black/20"></div>
         <div className="relative z-10 container mx-auto px-4">
@@ -64,7 +64,7 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Mission Section */}
+      
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
@@ -86,7 +86,7 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Values Section */}
+      
       <section className="py-16 bg-blue-50">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-blue-900 mb-12">Our Values</h2>
@@ -104,7 +104,7 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Team Section */}
+     
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center text-blue-900 mb-12">Our Team</h2>
@@ -125,7 +125,7 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* History Section */}
+     
       <section className="py-16 bg-blue-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
@@ -151,7 +151,7 @@ const AboutUsPage = () => {
         </div>
       </section>
 
-      {/* Contact Section */}
+   
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold text-blue-900 mb-6">Get In Touch</h2>

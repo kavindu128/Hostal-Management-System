@@ -53,32 +53,32 @@ public class AllocationServiceImpl implements AllocationService {
 
     @Override
     public Allocation allocateRoom(String regNo, String roomNo, LocalDate dateFrom, LocalDate dateTo) {
-        // Check if student exists
+
         Student student = studentRepository.findById(regNo)
                 .orElseThrow(() -> new RuntimeException("Student not found with registration number: " + regNo));
 
-        // Check if room exists
+
         Room room = roomRepository.findById(roomNo)
                 .orElseThrow(() -> new RuntimeException("Room not found with number: " + roomNo));
 
-        // Check if room is available
+
         if (!"AVAILABLE".equals(room.getStatus())) {
             throw new RuntimeException("Room is not available for allocation");
         }
 
-        // Check if student already has an active allocation
+
         Allocation existingAllocation = allocationRepository.findActiveAllocationByStudent(regNo);
         if (existingAllocation != null) {
             throw new RuntimeException("Student already has an active room allocation");
         }
 
-        // Check room capacity
+
         int activeAllocations = roomRepository.countActiveAllocationsByRoom(roomNo);
         if (activeAllocations >= room.getCapacity()) {
             throw new RuntimeException("Room has reached maximum capacity");
         }
 
-        // Create new allocation
+
         Allocation allocation = new Allocation();
         allocation.setStudent(student);
         allocation.setRoom(room);
@@ -86,7 +86,7 @@ public class AllocationServiceImpl implements AllocationService {
         allocation.setDateTo(dateTo);
         allocation.setStatus("ACTIVE");
 
-        // Update room status if it's now full
+
         if (activeAllocations + 1 >= room.getCapacity()) {
             room.setStatus("OCCUPIED");
             roomRepository.save(room);
@@ -101,7 +101,7 @@ public class AllocationServiceImpl implements AllocationService {
         allocation.setStatus("INACTIVE");
         allocationRepository.save(allocation);
 
-        // Update room status
+
         Room room = allocation.getRoom();
         int activeAllocations = roomRepository.countActiveAllocationsByRoom(room.getRoomNo());
 

@@ -9,14 +9,14 @@ const Navbar = ({ currentUser, onLogout }) => {
     <nav className="bg-gradient-to-r from-blue-600 to-cyan-500 text-white shadow-lg">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
+      
           <div className="flex items-center">
             <div className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-white to-blue-100">
               HostelMS
             </div>
           </div>
 
-          {/* Desktop Navigation */}
+          
           <div className="hidden md:flex items-center space-x-4">
             <Link 
               to="/" 
@@ -70,7 +70,7 @@ const Navbar = ({ currentUser, onLogout }) => {
             )}
           </div>
 
-          {/* Mobile menu button */}
+          
           <div className="md:hidden">
             <button
               onClick={() => setIsOpen(!isOpen)}
@@ -93,7 +93,7 @@ const Navbar = ({ currentUser, onLogout }) => {
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+     
       {isOpen && (
         <div className="md:hidden bg-blue-600">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">

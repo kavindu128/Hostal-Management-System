@@ -18,22 +18,22 @@ const RoomPage = () => {
 
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // Fetch data function
+  
   const fetchData = async () => {
     try {
       setLoading(true);
       
-      // Fetch allocations
+      
       const allocationsResponse = await fetch(`${API_BASE_URL}/allocations`);
       if (!allocationsResponse.ok) throw new Error('Failed to fetch allocations');
       const allocationsData = await allocationsResponse.json();
       
-      // Fetch students
+     
       const studentsResponse = await fetch(`${API_BASE_URL}/students`);
       if (!studentsResponse.ok) throw new Error('Failed to fetch students');
       const studentsData = await studentsResponse.json();
       
-      // Fetch available rooms
+      
       const roomsResponse = await fetch(`${API_BASE_URL}/rooms`);
       if (!roomsResponse.ok) throw new Error('Failed to fetch rooms');
       const roomsData = await roomsResponse.json();
@@ -42,7 +42,7 @@ const RoomPage = () => {
       setStudents(studentsData);
       setAvailableRooms(roomsData);
       
-      // Extract unique hostel names
+      
       const uniqueHostels = [...new Set(roomsData.map(room => room.hostelName))];
       setHostels(uniqueHostels);
       
@@ -104,7 +104,7 @@ const RoomPage = () => {
       });
 
       if (response.ok) {
-        // Reset form
+       
         setFormData({
           regNo: '',
           hostelName: '',
@@ -114,7 +114,7 @@ const RoomPage = () => {
           status: 'ACTIVE'
         });
         
-        // Refresh data
+       
         await fetchData();
         alert('Room allocated successfully!');
       } else {
@@ -129,7 +129,7 @@ const RoomPage = () => {
     }
   };
 
-// ... (previous code remains the same)
+
 
 const handleDeallocate = async (allocId) => {
   if (!window.confirm('Are you sure you want to deallocate this room?')) {
@@ -164,12 +164,12 @@ const handleDeallocate = async (allocId) => {
   return (
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Room Allocation</h1>
+
       
-      {/* Allocation Form */}
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Allocate Room</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
-          {/* Form fields */}
+        
           <div>
             <label className="block text-sm font-medium mb-1">Student</label>
             <select
@@ -260,7 +260,7 @@ const handleDeallocate = async (allocId) => {
         </form>
       </div>
 
-      {/* Allocations Table */}
+     
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Current Allocations</h2>
         {allocations.length === 0 ? (

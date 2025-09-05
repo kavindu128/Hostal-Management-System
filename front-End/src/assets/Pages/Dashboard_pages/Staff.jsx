@@ -10,7 +10,7 @@ const StaffPage = () => {
     contact: ''
   });
 
-  // Available positions for the dropdown
+ 
   const positionOptions = [
     'Warden',
     'Academic Sub Warden',
@@ -23,7 +23,7 @@ const StaffPage = () => {
 
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // Fetch staff members on component mount
+  
   useEffect(() => {
     fetchStaffMembers();
   }, []);
@@ -122,7 +122,7 @@ const StaffPage = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Staff Management</h1>
       
-      {/* Add Staff Form */}
+     
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Add New Staff Member</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -195,7 +195,6 @@ const StaffPage = () => {
         </form>
       </div>
 
-      {/* Staff List */}
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Staff Members</h2>
         

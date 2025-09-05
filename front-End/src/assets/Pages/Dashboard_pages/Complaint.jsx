@@ -11,7 +11,7 @@ const ComplaintPage = () => {
 
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // Fetch complaints and students on component mount
+  
   useEffect(() => {
     fetchComplaints();
     fetchStudents();
@@ -113,7 +113,7 @@ const ComplaintPage = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Complaint Management</h1>
       
-      {/* Submit Complaint Form */}
+     
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Submit New Complaint</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4">
@@ -159,7 +159,7 @@ const ComplaintPage = () => {
         </form>
       </div>
 
-      {/* Complaints List */}
+     
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Complaint History</h2>
         

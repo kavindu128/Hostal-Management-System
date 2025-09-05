@@ -1,7 +1,7 @@
-// api.js
+
 const API_BASE_URL = 'http://localhost:8080/api';
 
-// Student API functions
+// Student API 
 export const listStudents = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/students`);
@@ -58,7 +58,7 @@ export const updateStudent = async (regNo, data) => {
   return text ? JSON.parse(text) : null;
 };
 
-// Room API functions
+// Room API 
 export const getAllRooms = async () => {
   const response = await fetch(`${API_BASE_URL}/rooms`);
   return response.json();
@@ -74,14 +74,14 @@ export const getRoomsByHostel = async (hostelName) => {
   return response.json();
 };
 
-// Allocation API functions
+// Allocation API 
 export const getAllAllocations = async () => {
   const response = await fetch(`${API_BASE_URL}/allocations`);
   return response.json();
 };
 
 export const createAllocation = async (allocationData) => {
-  // Transform the data to match backend expectations
+  
   const backendData = {
     regNo: allocationData.studentRegNo,
     roomNo: allocationData.roomNo,
@@ -116,7 +116,7 @@ export const deleteAllocation = async (allocId) => {
   return response;
 };
 
-// Staff API functions
+// Staff API 
 export const getAllStaff = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/staff`);
@@ -170,7 +170,7 @@ export const deleteStaff = async (regNo) => {
   }
 };
 
-// Visitor API functions
+// Visitor API 
 export const getAllVisitors = async () => {
   const response = await fetch(`${API_BASE_URL}/visitors`);
   if (!response.ok) {
@@ -212,7 +212,7 @@ export const recordExitTime = async (visitorId) => {
   return response.json();
 };
 
-// Complaint API functions
+// Complaint API
 export const getAllComplaints = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/complaints`);
@@ -248,7 +248,7 @@ export const createComplaint = async (complaintData) => {
   }
 };
 
-// Payment API functions
+// Payment API
 export const getAllPayments = async () => {
   try {
     const response = await fetch(`${API_BASE_URL}/payments`);

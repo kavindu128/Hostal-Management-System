@@ -23,20 +23,23 @@ const NavbarWithAuth = () => {
   return (
     <Navbar currentUser={currentUser} onLogout={logout} />
   );
+
 };
 
 const AppContent = () => {
   return (
     <Router>
+
       <NavbarWithAuth />
+
       <Routes>
-        {/* Public routes */}
+        
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
 
-        {/* Protected dashboard routes */}
+       
         <Route path="/dashboard" element={
           <ProtectedRoute adminOnly={true}>
             <DashboardLayout />
@@ -50,7 +53,9 @@ const AppContent = () => {
           <Route path="complaint" element={<ComplaintPage />} />
           <Route path="payment" element={<PaymentPage />} />
         </Route>
+
       </Routes>
+
     </Router>
   );
 };

@@ -22,7 +22,7 @@ const PaymentPage = () => {
 
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // Fetch payments and students on component mount
+  
   useEffect(() => {
     fetchPayments();
     fetchStudents();
@@ -78,7 +78,7 @@ const PaymentPage = () => {
     try {
       setLoading(true);
       
-      // Convert amount to BigDecimal format expected by backend
+     
       const paymentData = {
         ...formData,
         amount: parseFloat(formData.amount)
@@ -141,7 +141,7 @@ const PaymentPage = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Payment Management</h1>
       
-      {/* Record Payment Form */}
+     
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Record New Payment</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -221,7 +221,7 @@ const PaymentPage = () => {
         </form>
       </div>
 
-      {/* Payments List */}
+    
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Payment History</h2>
         

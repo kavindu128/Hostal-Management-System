@@ -17,12 +17,8 @@ public interface AllocationRepository extends JpaRepository<Allocation,Long > {
     @Query("SELECT a FROM Allocation a WHERE a.status = 'ACTIVE'")
     List<Allocation> findActiveAllocations();
 
-    @Query("SELECT a FROM Allocation a WHERE a.room.roomNo = :roomNo AND a.status = 'ACTIVE'")
-    List<Allocation> findActiveAllocationsByRoom(@Param("roomNo") String roomNo);
-
     @Query("SELECT a FROM Allocation a WHERE a.student.regNo = :regNo AND a.status = 'ACTIVE'")
     Allocation findActiveAllocationByStudent(@Param("regNo") String regNo);
 
-    @Query("SELECT COUNT(a) FROM Allocation a WHERE a.room.roomNo = :roomNo AND a.status = 'ACTIVE'")
-    int countActiveAllocationsByRoom(@Param("roomNo") String roomNo);
+
 }

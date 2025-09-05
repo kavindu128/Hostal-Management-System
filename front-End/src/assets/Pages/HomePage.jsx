@@ -24,7 +24,7 @@ const hostels = [
 const HomePage = () => {
   return (
     <div className="min-h-screen flex flex-col">
-      {/* Hero Section with faculty background image */}
+     
       <section 
         className="relative py-10 text-center bg-cover bg-center"
         style={{ backgroundImage: `url(${faculty})` }}
@@ -43,7 +43,7 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Hostels Section */}
+     
       <section className="py-16 px-4 container mx-auto">
         <h2 className="text-3xl font-bold mb-12 text-center">OUR HOSTELS</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

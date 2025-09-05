@@ -13,7 +13,7 @@ const VisitorPage = () => {
 
   const API_BASE_URL = 'http://localhost:8080/api';
 
-  // Fetch visitors and students on component mount
+ 
   useEffect(() => {
     fetchVisitors();
     fetchStudents();
@@ -142,7 +142,7 @@ const VisitorPage = () => {
     <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Visitor Management</h1>
       
-      {/* Add Visitor Form */}
+     
       <div className="mb-8 bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Add New Visitor</h2>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -215,7 +215,7 @@ const VisitorPage = () => {
         </form>
       </div>
 
-      {/* Visitors List */}
+     
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-3">Visitor Log</h2>
         

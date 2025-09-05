@@ -37,7 +37,6 @@ const Sidebar = () => {
         </NavLink>
       ))}
       
-      {/* System Status */}
       <div className="mt-8 p-4 bg-blue-900 bg-opacity-50 rounded-lg">
         <h3 className="text-sm font-semibold text-cyan-300 mb-2">System Status</h3>
         <div className="flex items-center text-green-300 text-xs">

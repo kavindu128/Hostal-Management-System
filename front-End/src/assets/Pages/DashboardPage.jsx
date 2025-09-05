@@ -10,6 +10,7 @@ const DashboardPage = () => {
     { name: 'Hostel D', studentCount: 451 },
     { name: 'Hostel E', studentCount: 387 },
     { name: 'Hostel F', studentCount: 256 },
+    
   ];
 
    return (

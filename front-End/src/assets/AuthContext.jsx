@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user is logged in on app start
+   
     const user = localStorage.getItem('user');
     if (user) {
       setCurrentUser(JSON.parse(user));
@@ -28,6 +28,8 @@ export const AuthProvider = ({ children }) => {
         },
         body: JSON.stringify({ username, password }),
       });
+
+      console.log(response);
 
       if (response.ok) {
         const userData = await response.json();

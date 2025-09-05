@@ -21,6 +21,8 @@ public class AuthController {
     @Autowired
     private UserRepository userRepository;
 
+
+
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Map<String, String> credentials) {
         try {
@@ -39,7 +41,7 @@ public class AuthController {
                 User user = userOptional.get();
                 if (user.getPassword().equals(password)) {
                     logger.log(Level.INFO, "Login successful for username: " + username);
-                    // Return user info (excluding password for security)
+
                     return ResponseEntity.ok().body(Map.of(
                             "username", user.getUsername(),
                             "role", user.getRole(),
