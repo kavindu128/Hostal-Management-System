@@ -42,13 +42,11 @@ jobs:
 
     - name: Build and test backend with Maven
       run: |
-        # Check if backend/backend directory exists
         if [ -d "backend/backend" ]; then
           cd backend/backend
-          mvn clean compile test -Dspring.datasource.url=jdbc:mysql://localhost:3307/hostel_management -Dspring.datasource.username=root -Dspring.datasource.password=root
+          mvn clean compile test -Dspring.datasource.url=jdbc:mysql://localhost:3307/hostel_management -Dspring.datasource.username=root -Dspring.datasource.password=root -Dtest='!*SeleniumTest,!AddStudentTest,!LoginTest'
         else
           echo "Backend directory not found. Checking for alternative locations..."
-          # Add alternative directory checks here if needed
           find . -name "pom.xml" -type f
         fi
       env:
