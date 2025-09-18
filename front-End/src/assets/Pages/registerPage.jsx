@@ -47,6 +47,8 @@ const RegistrationPage = () => {
               Full Name
             </label>
             <input
+              input id="fullName" 
+              name="fullName"
               type="text"
               placeholder="Enter your full name"
               className="flex-grow bg-transparent rounded-lg px-4 py-2 text-lg text-black placeholder-gray-700 border border-gray-400"
@@ -61,6 +63,8 @@ const RegistrationPage = () => {
               Reg No
             </label>
             <input
+              id="regNo" 
+              name="regNo"
               type="text"
               placeholder="EG5016"
               className="flex-grow bg-transparent rounded-lg px-4 py-2 text-lg text-black placeholder-gray-700 border border-gray-400"
@@ -89,6 +93,8 @@ const RegistrationPage = () => {
               Date of Birth
             </label>
             <input
+              id="dateOfBirth" 
+              name="dateOfBirth"
               type="date"
               className="flex-grow bg-transparent rounded-lg px-4 py-2 text-lg text-black border border-gray-400"
               value={formData.dateOfBirth}
@@ -103,6 +109,8 @@ const RegistrationPage = () => {
             </label>
             <div className="flex-grow space-y-4">
               <input
+                id="addressLine1" 
+                name="addressLine1"
                 type="text"
                 placeholder="House No / Apartment"
                 className="w-full bg-transparent rounded-lg px-4 py-2 text-lg text-black placeholder-gray-700 border border-gray-400"

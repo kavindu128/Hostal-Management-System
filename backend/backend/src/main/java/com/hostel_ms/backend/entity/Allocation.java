@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table()
+@Table
 @Entity
 public class Allocation {
 
@@ -34,7 +34,7 @@ public class Allocation {
 
     @ManyToOne
     @JoinColumn(name = "room_no")
-//    @JsonIgnore
+    @JsonIgnore
     private Room room;
 }
 

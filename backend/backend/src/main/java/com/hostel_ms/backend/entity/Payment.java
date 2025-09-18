@@ -19,6 +19,7 @@ import java.time.LocalDate;
 @Table
 @Entity
 public class Payment {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long paymentId;

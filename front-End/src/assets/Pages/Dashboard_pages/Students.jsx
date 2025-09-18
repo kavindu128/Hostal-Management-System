@@ -80,7 +80,7 @@ const StudentsPage = () => {
     : [];
 
   return (
-    <div className="p-6">
+    <div className="p-6" id="1">
       <h1 className="text-2xl font-bold mb-4">Student Management</h1>
       
       <div className="flex items-center mb-4 gap-4">

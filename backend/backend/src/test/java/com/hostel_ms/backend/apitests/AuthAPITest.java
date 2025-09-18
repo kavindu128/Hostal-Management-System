@@ -1,4 +1,23 @@
 package com.hostel_ms.backend.apitests;
+import io.restassured.http.ContentType;
+import org.junit.jupiter.api.Test;
 
-public class AuthAPITest {
+import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.*;
+
+public class AuthAPITest extends BaseTest {
+
+    @Test
+    public void testLoginWithValidCredentials() {
+        given()
+                .contentType(ContentType.JSON)
+                .body("{\"username\": \"admin\", \"password\": \"password\"}") // Changed from "admin" to "password"
+                .when()
+                .post("/auth/login")
+                .then()
+                .statusCode(200)
+                .body("username", equalTo("admin"))
+                .body("role", notNullValue())
+                .body("message", equalTo("Login successful"));
+    }
 }

@@ -59,7 +59,7 @@ public class Student {
     private List<Complaint> complaints = new ArrayList<>();
 
     @OneToMany(mappedBy = "student", cascade = CascadeType.ALL)
-    @JsonIgnore
+   @JsonIgnore
     private List<Payment> payments = new ArrayList<>();
 
     @OneToOne(mappedBy = "student", cascade = CascadeType.ALL)

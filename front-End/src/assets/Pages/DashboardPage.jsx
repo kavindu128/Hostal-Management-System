@@ -14,7 +14,7 @@ const DashboardPage = () => {
   ];
 
    return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="Dashboard">
       {hostels.map((hostel, index) => (
         <HostelCard key={index} name={hostel.name} studentCount={hostel.studentCount} />
       ))}
